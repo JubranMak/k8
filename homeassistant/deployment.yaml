@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: homeassistant
+  labels:
+    role: homeassistant
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      role: homeassistant
+  template:
+    metadata:
+      labels:
+        role: homeassistant
+    spec:
+      containers:
+        - name: homeassistant
+          image: homeassistant/home-assistant:stable
+          ports:
+            - containerPort: 8123
+          env:
+            - name: TZ
+              value: "Europe/Berlin"
