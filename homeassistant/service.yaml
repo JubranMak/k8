@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: myapp-service
+  name: homeassistant
 spec:
   type: NodePort
   selector:
-    role: myapp
+    role: homeassistant
   ports:
     - protocol: TCP
-      port: 3000
-      targetPort: 3000
+      port: 8123
+      targetPort: 8123
       nodePort: 30080
