@@ -1,0 +1,21 @@
+# Values passed to the ingress-nginx subchart.
+# Keys are nested under the dependency name ("ingress-nginx").
+ingress-nginx:
+  controller:
+    # Single-node homelab: one replica is enough.
+    replicaCount: 1
+
+    ingressClassResource:
+      name: nginx
+      default: true        # makes "nginx" the default class so Ingresses without an explicit class use it
+
+    # On bare-metal/Pi you'll typically front this with MetalLB (LoadBalancer)
+    # or expose via hostPort. Default service type is LoadBalancer.
+    service:
+      type: LoadBalancer
+
+    # Keep resource use modest on a Pi.
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi

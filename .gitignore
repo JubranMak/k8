@@ -1,0 +1,5 @@
+# IDE
+.idea/
+
+# Helm: downloaded dependency charts (reproducible from Chart.lock)
+cluster/**/charts/

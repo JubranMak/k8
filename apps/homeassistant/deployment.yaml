@@ -16,9 +16,16 @@ spec:
     spec:
       containers:
         - name: homeassistant
+          volumeMounts:
+            - mountPath: /config
+              name: config
           image: homeassistant/home-assistant:stable
           ports:
             - containerPort: 8123
           env:
             - name: TZ
               value: "Europe/Berlin"
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: homeassistant-config
