@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: homeassistant-db-allow-hass-only
+spec:
+  podSelector:
+    matchLabels:
+      app: homeassistant-db
+  policyTypes:
+    - Ingress
+  ingress:
+    # Allow connections ONLY from pods labeled role=homeassistant (the HA app),
+    # and only on the postgres port. Everything else is denied by default
+    # (a podSelector with an ingress rule implicitly denies all other ingress).
+    - from:
+        - podSelector:
+            matchLabels:
+              role: homeassistant
+      ports:
+        - protocol: TCP
+          port: 5432

@@ -25,6 +25,13 @@ spec:
           env:
             - name: TZ
               value: "Europe/Berlin"
+            # recorder connection string, pulled from the DB secret.
+            # Referenced in configuration.yaml as: db_url: !env_var DB_URL
+            - name: DB_URL
+              valueFrom:
+                secretKeyRef:
+                  name: homeassistant-db
+                  key: DB_URL
       volumes:
         - name: config
           persistentVolumeClaim:
