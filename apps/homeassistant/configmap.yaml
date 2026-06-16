@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: homeassistant-config-yaml
+data:
+  # This whole block is an opaque string to Kubernetes (note the `|`).
+  # The `!env_var` / `!include` tags are HA's YAML tags, parsed by HA, not k8s.
+  configuration.yaml: |
+    default_config:
+
+    # Use the postgres recorder; DB_URL comes from the env var injected
+    # from the homeassistant-db Secret (kept out of this file on purpose).
+    recorder:
+      db_url: !env_var DB_URL
+
+    # Trust the ingress-nginx reverse proxy so HA stops returning 400.
+    http:
+      use_x_forwarded_for: true
+      trusted_proxies:
+        - 10.244.0.0/16   # minikube pod CIDR; k3s default is 10.42.0.0/16

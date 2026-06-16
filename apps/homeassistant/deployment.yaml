@@ -19,6 +19,10 @@ spec:
           volumeMounts:
             - mountPath: /config
               name: config
+            - mountPath: /config/configuration.yaml
+              name: config-yaml
+              subPath: configuration.yaml
+              readOnly: true
           image: homeassistant/home-assistant:stable
           ports:
             - containerPort: 8123
@@ -36,3 +40,6 @@ spec:
         - name: config
           persistentVolumeClaim:
             claimName: homeassistant-config
+        - name: config-yaml
+          configMap:
+            name: homeassistant-config-yaml
